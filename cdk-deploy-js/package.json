@@ -1,0 +1,27 @@
+{
+  "name": "cdk-deploy-js",
+  "version": "0.1.0",
+  "bin": {
+    "cdk-deploy-js": "bin/cdk-deploy-js.js"
+  },
+  "scripts": {
+    "build": "echo \"The build step is not required when using JavaScript!\" && exit 0",
+    "cdk": "cdk",
+    "test": "jest",
+    "deploy": "npm run build && npm run cdk-deploy",
+    "cdk-deploy": "cdk deploy",
+    "upload": "aws s3 sync ./dist s3://aws-course-bucket-ca --delete",
+    "invalidate": "./invalidate-cloudfront.sh"
+  },
+  "devDependencies": {
+    "aws-cdk": "2.144.0",
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-s3": "^1.204.0",
+    "@aws-sdk/client-s3": "^3.592.0",
+    "aws-cdk-lib": "2.144.0",
+    "aws-sdk": "^2.1637.0",
+    "constructs": "^10.0.0"
+  }
+}
