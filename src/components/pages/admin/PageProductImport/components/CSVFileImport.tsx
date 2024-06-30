@@ -43,10 +43,6 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
 
       console.log("File to upload: ", file.name);
 
-      console.log("Uploading to: ", presignedUrl);
-
-      console.log("File details:", file);
-
       const result = await fetch(presignedUrl, {
         method: "PUT",
         body: file,
@@ -59,7 +55,7 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
       if (!result.ok) {
         console.error("Failed to upload:", await result.text());
       }
-      setFile(undefined); // Clear the file input after successful upload
+      setFile(undefined);
     } catch (error) {
       console.error("Error uploading file:", error);
     }
