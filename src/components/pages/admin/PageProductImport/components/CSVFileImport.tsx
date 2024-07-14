@@ -11,6 +11,7 @@ type CSVFileImportProps = {
 export default function CSVFileImport({ url, title }: CSVFileImportProps) {
   const [file, setFile] = React.useState<File>();
 
+  localStorage.setItem('authorization_token', 'Q2hyaXN0aW5hQXNpcGVua2E6VEVTVF9QQVNTV09SRA==')
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
@@ -29,9 +30,14 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
 
     try {
       console.log("Requesting presigned URL from", url);
+      const authorization_token = localStorage.getItem('authorization_token');
+      const authHeaders = {
+        Authorization: `Basic ${authorization_token}`,
+      };
 
       const response = await axios(url, {
         method: "GET",
+        headers: authHeaders,
         params: {
           name: encodeURIComponent(file.name),
         },
@@ -46,9 +52,6 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
       const result = await fetch(presignedUrl, {
         method: "PUT",
         body: file,
-        headers: {
-          "Content-Type": "text/csv",
-        },
       });
 
       console.log("File uploaded response:", result);
